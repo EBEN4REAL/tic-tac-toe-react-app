@@ -1,11 +1,4 @@
-class Square extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      value: null
-    }
-  }
-  render() {
+const Square= (props) => {
     return (
        <button 
         style={
@@ -20,25 +13,26 @@ class Square extends React.Component {
               outline: 'none'
             }
           }   
-          onClick={this.props.clicked}>
-            {this.props.value}
+          onClick={props.clicked}>
+            {props.value}
       </button>
     );
-  }
 }
 
 class Board extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      squares: Array(9).fill(null)
+      squares: Array(9).fill(null),
+      xIsNext: false
     }
   }
   handleClick(i) {
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
+    squares[i] = this.state.xIsNext ? 'X' : 'O'; 
     this.setState({
-      squares: squares
+      squares: squares,
+      xIsNext: !this.state.xIsNext
     });
     console.log(this.state.squares);
   }
