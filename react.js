@@ -23,7 +23,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return <Square 
       value={this.props.squares[i]}
-      clicked={this.props.onClick}/>;
+      clicked={() => this.props.onClick(i)}/>;
   }
 
   render() {
@@ -58,13 +58,16 @@ class Game extends React.Component {
     xIsNext: true,
   }
   handleClick(i) {
+    console.log(i);
     const history = this.state.history;
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares)) {
+    console.log(squares);
+    if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    console.log(squares);
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -74,9 +77,7 @@ class Game extends React.Component {
   }
   render() {
     const history = this.state.history;
-    console.log(history);
     const current = history[history.length - 1];
-    console.log(current);
 
     const winner = calculateWinner(current.squares);
 
