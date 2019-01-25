@@ -1,5 +1,5 @@
 
-This is a game that:
+<h1>This is a game that: <h1>
 
 Lets you play tic-tac-toe,
 Indicates when a player has won the game,
