@@ -23,7 +23,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return <Square 
       value={this.props.squares[i]}
-      clicked={() => this.props.handleClick(i)}/>;
+      clicked={this.props.onClick}/>;
   }
 
   render() {
@@ -61,7 +61,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    if (calculateWinner(squares)) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
@@ -74,7 +74,10 @@ class Game extends React.Component {
   }
   render() {
     const history = this.state.history;
+    console.log(history);
     const current = history[history.length - 1];
+    console.log(current);
+
     const winner = calculateWinner(current.squares);
 
     let status;
@@ -85,13 +88,12 @@ class Game extends React.Component {
     }
     return (
       <div 
-        style={
-          { 
+        style={{ 
             display: 'flex',
             flexDirection: 'row'
            }}>
         <div>
-          <Board squares={current.squares} onCLick={(i) => this.handleClick(i)} />
+          <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
         </div>
         <div>
           <div>{status}</div>
@@ -116,8 +118,8 @@ const calculateWinner = (squares) => {
 
   for(let i = 0; i < lines.length; i++){
    const  [a,b,c] = lines[i];
-   console.log(a,b,c);
-   console.log(squares[a]);
+  //  console.log(a,b,c);
+  //  console.log(squares[a]);
    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
      return squares[a];
    }
