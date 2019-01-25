@@ -14,7 +14,6 @@ class Square extends React.Component {
               border: '1px light grey',
               height: '40px' , 
               backgroundColor: 'white',
-              float: 'left'
             }
           }   
           onClick={() => this.setState({value: 'X'})}>
