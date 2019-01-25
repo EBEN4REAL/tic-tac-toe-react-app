@@ -1,8 +1,8 @@
 class Square extends React.Component {
   render() {
     return (
-      <button className="square">
-        {/* TODO */}
+       <button className="square" style={{ width:'40px', border: '1px light grey', height: '40px' , backgroundColor: 'white' }}>
+
       </button>
     );
   }
@@ -19,17 +19,17 @@ class Board extends React.Component {
     return (
       <div>
         <div className="status">{status}</div>
-        <div className="board-row">
+        <div>
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
         </div>
-        <div className="board-row">
+        <div>
           {this.renderSquare(3)}
           {this.renderSquare(4)}
           {this.renderSquare(5)}
         </div>
-        <div className="board-row">
+        <div>
           {this.renderSquare(6)}
           {this.renderSquare(7)}
           {this.renderSquare(8)}
