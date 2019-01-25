@@ -10,10 +10,14 @@ class Square extends React.Component {
        <button 
         style={
             {
-              width:'40px', 
-              border: '1px light grey',
-              height: '40px' , 
+              width:'34px', 
+              border: '1px solid #999',
+              height: '34px' , 
               backgroundColor: 'white',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              lineHeight: '34px',
+              outline: 'none'
             }
           }   
           onClick={() => this.setState({value: 'X'})}>
@@ -24,8 +28,14 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null)
+    }
+  }
   renderSquare(i) {
-    return <Square value={i}/>;
+    return <Square value={this.state.squares[i]}/>;
   }
 
   render() {
@@ -57,7 +67,12 @@ class Board extends React.Component {
 class Game extends React.Component {
   render() {
     return (
-      <div>
+      <div 
+        style={
+          { 
+            display: 'flex',
+            flexDirection: 'row'
+           }}>
         <div>
           <Board />
         </div>
