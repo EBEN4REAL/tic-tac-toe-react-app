@@ -20,40 +20,13 @@ const Square= (props) => {
 }
 
 class Board extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: false
-    }
-  }
-  handleClick(i) {
-    const squares = this.state.squares.slice();
-     if (calculateWinner(squares)) {
-       return;
-     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O'; 
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext
-    });
-    console.log(this.state.squares);
-  }
   renderSquare(i) {
     return <Square 
-      value={this.state.squares[i]}
-      clicked={() => this.handleClick(i)}/>;
+      value={this.props.squares[i]}
+      clicked={() => this.props.handleClick(i)}/>;
   }
 
   render() {
-     const winner = calculateWinner(this.state.squares);
-     let status;
-     if (winner) {
-       status = 'Winner: ' + winner;
-     } else {
-       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-     }
-
     return (
       <div>
         <div className="status">{status}</div>
@@ -78,7 +51,38 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+  state = {
+     history: [{
+         squares: Array(9).fill(null),
+       }],
+    xIsNext: true,
+  }
+  handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      history: history.concat([{
+        squares: squares,
+      }]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
   render() {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const winner = calculateWinner(current.squares);
+
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
     return (
       <div 
         style={
@@ -87,10 +91,10 @@ class Game extends React.Component {
             flexDirection: 'row'
            }}>
         <div>
-          <Board />
+          <Board squares={current.squares} onCLick={(i) => this.handleClick(i)} />
         </div>
         <div>
-          <div>{/* status */}</div>
+          <div>{status}</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
